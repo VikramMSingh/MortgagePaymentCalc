@@ -9,6 +9,10 @@ def getInterest(url):
   cs = cs.drop(5,axis=0)
   return(float(cs['IRR'].head(1)))
 
+def calcDown(p,pr=10):
+  down = p*pr/100
+  return down
+
 def calcMonthly(principal, irr, term = 30):
   r = irr/1200
   n = term * 12
@@ -21,8 +25,10 @@ def main():
   p = 600000
   url = 'https://fred.stlouisfed.org/series/MORTGAGE30US'
   a = getInterest(url)
-  b = calcMonthly(p,a)
-  print(f'${b}')
+  b = calcDown(p)
+  p = p - b
+  c = calcMonthly(p,a)
+  print(f'${c}')
 
 if __name__==main():
   main()
